@@ -42,11 +42,7 @@ function FavoriteView() {
     }
 
     const displayButtons = (favoriteId) => {
-        let buttonString = '';
-        for (let category of categories) {
-            buttonString += <button onClick={()=>addCategory(favoriteId, category.id)}>{category.name}</button>
-        }
-        return buttonString;
+        return categories.map(category => <button key={category.id} onClick={()=>addCategory(favoriteId, category.id)}>{category.name}</button>);
     }
 
     return <>
