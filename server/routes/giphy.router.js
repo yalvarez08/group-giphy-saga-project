@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
         const data = response.data
        const allDetails = data.data.map((gif)=>(
         {
-            url:gif.url,
+            url:gif.images.original.webp,
             title:gif.title
         }
        ))
