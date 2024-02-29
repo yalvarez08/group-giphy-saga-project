@@ -1,10 +1,23 @@
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 function FavoriteView() {
+    const dispatch = useDispatch();
     const history = useHistory();
     const categories = useSelector(store => store.categoriesReducer);
     const favorites = useSelector(store => store.favoritesReducer);
+
+    const fetchData = () => {
+        dispatch({
+            type: 'FETCH_CATEGORIES'
+        });
+        dispatch({
+            type: 'FETCH_FAVORITES'
+        });
+    }
+
+    useEffect(fetchData, []);
 
     const displayFavorites = () => {
         if (!favorites) {
@@ -12,6 +25,8 @@ function FavoriteView() {
         } else {
             return favorites.map(favorite => <li key={favorite.id}>
                 <img src={favorite.url} alt={favorite.title} />
+                Category: {favorite.category}
+
             </li>);
         }
     }
