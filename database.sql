@@ -21,7 +21,7 @@ CREATE TABLE "favorites" (
   "id" SERIAL PRIMARY KEY,
   "url" VARCHAR NOT NULL,
   "title" VARCHAR,
-  "category_id" VARCHAR (100) REFERENCES "categories"
+  "category_id" INT REFERENCES "categories"
 );
 
 -- You'll need a "favorites" table for storing each instance of
