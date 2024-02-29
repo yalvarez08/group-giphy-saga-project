@@ -45,7 +45,7 @@ function* fetchGifs(action) {
 //GET /categories
 function* fetchCategories(action) {
     try {
-        const gifResponse = yield axios.get('/api/category');
+        const gifResponse = yield axios.get('/api/categories');
         yield put({type: 'SET_CATEGORIES', payload: gifResponse.data});
     } catch(err) {
         console.log('Error getting categories from server:', err);

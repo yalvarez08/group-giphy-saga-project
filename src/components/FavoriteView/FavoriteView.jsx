@@ -20,7 +20,7 @@ function FavoriteView() {
     useEffect(fetchData, []);
 
     const displayFavorites = () => {
-        if (!favorites) {
+        if (!favorites.length) {
             return <div>You have no favorites!</div>;
         } else {
             return favorites.map(favorite => <li key={favorite.id}>
