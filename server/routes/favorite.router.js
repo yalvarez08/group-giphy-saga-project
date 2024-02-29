@@ -3,25 +3,85 @@ const pool = require('../modules/pool');
 
 const router = express.Router();
 
-// return all favorite images
+// Return all favorite images
 router.get('/', (req, res) => {
-  res.sendStatus(200);
+  const queryText = `
+    SELECT * FROM "favorites";
+  `;
+  pool.query(queryText)
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      console.log(`Error on query ${error}`);
+      res.sendStatus(500);
+    });
 });
 
-// add a new favorite
+// Add a new favorite
 router.post('/', (req, res) => {
-  res.sendStatus(201);
+  const { url, title, category_id } = req.body;
+  const queryText = `
+    INSERT INTO "favorites" ("url", "title", "category_id")
+    VALUES ($1, $2, $3)
+    RETURNING *;
+  `;
+  const values = [url, title, category_id];
+  pool.query(queryText, values)
+    .then((result) => {
+      res.status(201).send(result.rows[0]);
+    })
+    .catch((error) => {
+      console.log(`Error on query ${error}`);
+      res.sendStatus(500);
+    });
 });
 
-// update a favorite's associated category
+// Update a favorite's associated category
 router.put('/:id', (req, res) => {
-  // req.body should contain a category_id to add to this favorite image
-  res.sendStatus(200);
+  const { id } = req.params;
+  const { category_id } = req.body;
+  const queryText = `
+    UPDATE "favorites"
+    SET "category_id" = $1
+    WHERE "id" = $2
+    RETURNING *;
+  `;
+  const values = [category_id, id];
+  pool.query(queryText, values)
+    .then((result) => {
+      if (result.rows.length === 0) {
+        res.sendStatus(404); // Favorite not found
+      } else {
+        res.sendStatus(200);
+      }
+    })
+    .catch((error) => {
+      console.log(`Error on query ${error}`);
+      res.sendStatus(500);
+    });
 });
 
-// delete a favorite
+// Delete a favorite
 router.delete('/:id', (req, res) => {
-  res.sendStatus(200);
+  const { id } = req.params;
+  const queryText = `
+    DELETE FROM "favorites"
+    WHERE "id" = $1;
+  `;
+  const values = [id];
+  pool.query(queryText, values)
+    .then((result) => {
+      if (result.rowCount === 0) {
+        res.sendStatus(404); // Favorite not found
+      } else {
+        res.sendStatus(200);
+      }
+    })
+    .catch((error) => {
+      console.log(`Error on query ${error}`);
+      res.sendStatus(500);
+    });
 });
 
 module.exports = router;
