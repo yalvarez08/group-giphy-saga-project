@@ -62,26 +62,26 @@ router.put('/:id', (req, res) => {
     });
 });
 
-// Delete a favorite
-router.delete('/:id', (req, res) => {
-  const { id } = req.params;
-  const queryText = `
-    DELETE FROM "favorites"
-    WHERE "id" = $1;
-  `;
-  const values = [id];
-  pool.query(queryText, values)
-    .then((result) => {
-      if (result.rowCount === 0) {
-        res.sendStatus(404); // Favorite not found
-      } else {
-        res.sendStatus(200);
-      }
-    })
-    .catch((error) => {
-      console.log(`Error on query ${error}`);
-      res.sendStatus(500);
-    });
-});
+// // Delete a favorite
+// router.delete('/:id', (req, res) => {
+//   const { id } = req.params;
+//   const queryText = `
+//     DELETE FROM "favorites"
+//     WHERE "id" = $1;
+//   `;
+//   const values = [id];
+//   pool.query(queryText, values)
+//     .then((result) => {
+//       if (result.rowCount === 0) {
+//         res.sendStatus(404); // Favorite not found
+//       } else {
+//         res.sendStatus(200);
+//       }
+//     })
+//     .catch((error) => {
+//       console.log(`Error on query ${error}`);
+//       res.sendStatus(500);
+//     });
+// });
 
 module.exports = router;
