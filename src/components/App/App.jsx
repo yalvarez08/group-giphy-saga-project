@@ -1,17 +1,22 @@
+
+import { HashRouter as Router, Route } from 'react-router-dom';
+import FavoriteView from '../FavoriteView/FavoriteView';
+import SearchView from '../SearchView/SearchView';
 import React from 'react';
-// import FavoriteView from '../FavoriteView/FavoriteView';
-// import SearchView from '../SearchView/SearchView';
-import Header from '../Header/Header';
 import './App.css';
+
 
 
 function App() {
   return (
-    <div className="App">
-    <Header />
-
-
-    </div>
+    <Router>
+      <Route path="/" exact>
+        <SearchView />
+      </Route>
+      <Route path="/favorite-view">
+        <FavoriteView />
+      </Route>
+    </Router>
   );
 }
 
