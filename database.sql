@@ -3,7 +3,7 @@
 -- Categories table:
 CREATE TABLE "categories" (
   "id" SERIAL PRIMARY KEY,
-  "name" VARCHAR (100) NOT NULL
+  "name" VARCHAR (100) NOT NULL 
 );
 
 -- Default categories. You may change these. 🙂
@@ -17,6 +17,12 @@ INSERT INTO "categories"
   ('whimsical');
 
 -- Favorites table:
+CREATE TABLE "favorites" (
+  "id" SERIAL PRIMARY KEY,
+  "url" VARCHAR NOT NULL,
+  "title" VARCHAR,
+  "category_id" VARCHAR (100) REFERENCES "categories"
+);
 
 -- You'll need a "favorites" table for storing each instance of
 -- a Giphy image that has been "favorited."
