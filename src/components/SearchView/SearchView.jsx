@@ -7,11 +7,32 @@ function SearchView() {
     const dispatch = useDispatch();
     const history = useHistory();
     const [searchTerms, setSearchTerms] = useState('');
-    const searchResults = useSelector(store => store.searchresults);
+    const searchResults = useSelector(store => store.searchResults);
 
     const searchForGif = () => {
-        // TODO: dispatch a call to a saga with the search term as a payload
+        dispatch({
+            type: 'FETCH_GIFS',
+            payload: searchTerms
+        });
         setSearchTerms('');
+    }
+
+    const addToFavorites = (url, title) => {
+        dispatch({
+            type: 'ADD_TO_FAVORITES',
+            payload: { url, title }
+        });
+    }
+
+    const displayResults = () => {
+        if (!searchResults) {
+            return <div>Make a search!</div>;
+        } else {
+            return searchResults.map((item, index) => <li key={index}>
+                <img src={item.url} alt={item.title} />
+                <button onClick={()=>addToFavorites(item.url, item.title)}>Favorite!</button>
+            </li>);
+        }
     }
 
     return <>
@@ -21,7 +42,7 @@ function SearchView() {
             <input type="text" placeholder="Search" value={searchTerms} onChange={event=>setSearchTerms(event.target.value)} />
             <button onClick={searchForGif}>Search</button>
         </div>
-        {/* TODO: display the search results */}
+        {displayResults()}
     </>;
 }
 
