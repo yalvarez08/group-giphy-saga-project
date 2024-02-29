@@ -42,7 +42,25 @@ function* fetchGifs(action) {
         console.log('Error getting gifs from server:', err);
     }
 }
+//GET /categories
+function* fetchCategories(action) {
+    try {
+        const gifResponse = yield axios.get('/api/category');
+        yield put({type: 'SET_CATEGORIES', payload: gifResponse.data});
+    } catch(err) {
+        console.log('Error getting categories from server:', err);
+    }
+}
 
+//GET /favorites
+function* fetchFavorites(action) {
+    try {
+        const gifResponse = yield axios.get('/api/favorites');
+        yield put({type: 'SET_FAVORITES', payload: gifResponse.data});
+    } catch(err) {
+        console.log('Error getting favorites from server:', err);
+    }
+}
 //POST request to add to favorites
 function* postGifToFavorites(action) {
     try {
@@ -56,18 +74,22 @@ function* postGifToFavorites(action) {
 //PUT request to set category for fav gifs
 function* setGifCategory(action) {
     try {
-        yield axios.put('/api/favorites/' + action.payload);
+        yield axios.put('/api/favorites/' + action.payload.id, {category_id: action.payload.category_id});
         yield put({type: 'SET_CATEGORIES'});
     } catch(err) {
         console.log('Error updating fav gif category:', err);
     }
 }
 
+
 // Create the rootSaga generator function
 function* rootSaga() {
     yield takeLatest('FETCH_GIFS', fetchGifs);
     yield takeLatest('ADD_TO_FAVORITES', postGifToFavorites);
     yield takeLatest('UPDATE_CATEGORY', setGifCategory);
+    yield takeLatest('FETCH_CATEGORIES', fetchCategories);
+    yield takeLatest('FETCH_FAVORITES', fetchFavorites);
+
 }
 
 
