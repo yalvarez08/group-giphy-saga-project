@@ -25,7 +25,7 @@ function SearchView() {
     }
 
     const displayResults = () => {
-        if (!searchResults) {
+        if (!searchResults.length) {
             return <div>Make a search!</div>;
         } else {
             return searchResults.map((item, index) => <li key={index}>
