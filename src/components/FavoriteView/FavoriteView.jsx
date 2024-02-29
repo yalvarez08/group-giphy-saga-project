@@ -26,9 +26,27 @@ function FavoriteView() {
             return favorites.map(favorite => <li key={favorite.id}>
                 <img src={favorite.url} alt={favorite.title} />
                 Category: {favorite.category}
-
+                {displayButtons(favorite.id)}
             </li>);
         }
+    }
+
+    const addCategory = (favoriteId, categoryId) => {
+        dispatch({
+            type: 'UPDATE_CATEGORY',
+            payload: {
+                id: favoriteId,
+                category_id: categoryId
+            }
+        });
+    }
+
+    const displayButtons = (favoriteId) => {
+        let buttonString = '';
+        for (let category of categories) {
+            buttonString += <button onClick={()=>addCategory(favoriteId, category.id)}>{category.name}</button>
+        }
+        return buttonString;
     }
 
     return <>
