@@ -69,6 +69,7 @@ function* fetchFavorites(action) {
 function* postGifToFavorites(action) {
     try {
         yield axios.post('/api/favorites', action.payload);
+        yield put({type: 'FETCH_FAVORITES'});
         yield put({type: 'FETCH_GIFS'});
     } catch(err) {
         console.log('Error adding gif to favorites:', err);
