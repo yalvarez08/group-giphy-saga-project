@@ -7,7 +7,8 @@ const router = express.Router();
 router.get('/', (req, res) => {
   const queryText = `
     SELECT favorites.id, url, title, name AS category  FROM "favorites"
-    JOIN "categories" ON favorites.category_id=categories.id;;
+    LEFT JOIN "categories" ON favorites.category_id=categories.id
+    ORDER BY favorites.id ASC;
   `;
   pool.query(queryText)
     .then((result) => {

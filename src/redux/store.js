@@ -36,7 +36,11 @@ const searchResults = (state = [], action) => {
 //GET from giphy api
 function* fetchGifs(action) {
     try {
-        const gifResponse = yield axios.get('/api/giphy?q=' + action.payload);
+        // console.log(action.payload);
+        const gifResponse = yield axios.get('/api/giphy', {
+            params: {
+                q: action.payload}});
+        // const gifResponse = yield axios.get('/api/giphy?q=' + action.payload);
         yield put({type: 'SET_SEARCHES', payload: gifResponse.data});
     } catch(err) {
         console.log('Error getting gifs from server:', err);
@@ -65,6 +69,7 @@ function* fetchFavorites(action) {
 function* postGifToFavorites(action) {
     try {
         yield axios.post('/api/favorites', action.payload);
+        yield put({type: 'FETCH_FAVORITES'});
         yield put({type: 'FETCH_GIFS'});
     } catch(err) {
         console.log('Error adding gif to favorites:', err);
@@ -75,7 +80,7 @@ function* postGifToFavorites(action) {
 function* setGifCategory(action) {
     try {
         yield axios.put('/api/favorites/' + action.payload.id, {category_id: action.payload.category_id});
-        yield put({type: 'SET_CATEGORIES'});
+        yield put({type: 'FETCH_FAVORITES'});
     } catch(err) {
         console.log('Error updating fav gif category:', err);
     }

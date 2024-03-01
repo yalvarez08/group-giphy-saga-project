@@ -22,6 +22,7 @@ function SearchView() {
             type: 'ADD_TO_FAVORITES',
             payload: { url, title }
         });
+        history.push('/favorite-view');
     }
 
     const displayResults = () => {

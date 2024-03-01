@@ -20,6 +20,7 @@ function FavoriteView() {
     useEffect(fetchData, []);
 
     const displayFavorites = () => {
+        console.log('favorites:', favorites);
         if (!favorites.length) {
             return <div>You have no favorites!</div>;
         } else {
