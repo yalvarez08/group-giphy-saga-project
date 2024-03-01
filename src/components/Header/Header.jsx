@@ -7,6 +7,5 @@ function Header() {
             <h1>Giphy Search!</h1>
         </header>
     )
-    
 }
 export default Header;

@@ -1,10 +1,9 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import './FavoriteView.css'
 
 function FavoriteView() {
     const dispatch = useDispatch();
-    const history = useHistory();
     const categories = useSelector(store => store.categoriesReducer);
     const favorites = useSelector(store => store.favoritesReducer);
 
@@ -48,7 +47,7 @@ function FavoriteView() {
 
     return <>
         <h1>Giphy Favorites!</h1>
-        <button onClick={()=>history.push('/')}>Go to Search</button>
+        
         {displayFavorites()}
     </>;
 }

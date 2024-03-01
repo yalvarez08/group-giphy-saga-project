@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import './SearchView.css'
 
 
 function SearchView() {
@@ -27,23 +28,23 @@ function SearchView() {
 
     const displayResults = () => {
         if (!searchResults.length) {
-            return <div>Make a search!</div>;
+            return <>
+            <div className="search_title">Make a search!</div>
+            <input type="text" placeholder="Search" value={searchTerms} onChange={event=>setSearchTerms(event.target.value)} />
+            <button className="search_btn" onClick={searchForGif}>Search</button>
+            </>;
         } else {
             return searchResults.map((item, index) => <li key={index}>
                 <img src={item.url} alt={item.title} />
-                <button onClick={()=>addToFavorites(item.url, item.title)}>Favorite!</button>
+                <button className="fav_btn" onClick={()=>addToFavorites(item.url, item.title)}>Favorite!</button>
             </li>);
         }
     }
 
     return <>
-        <h1>Giphy Search!</h1>
-        <button onClick={()=>history.push('/favorite-view')}>Go to Favorites</button>
-        <div>
-            <input type="text" placeholder="Search" value={searchTerms} onChange={event=>setSearchTerms(event.target.value)} />
-            <button onClick={searchForGif}>Search</button>
-        </div>
+        
         {displayResults()}
+    
     </>;
 }
 

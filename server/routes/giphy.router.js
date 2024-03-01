@@ -13,10 +13,10 @@ router.get('/', (req, res) => {
         // console.log(response.data);
         //only extracting url and title
         const data = response.data
-       const allDetails = data.data.map((gif)=>(
+        const allDetails = data.data.map((gif)=>(
         {
-            url:gif.images.original.webp,
-            title:gif.title
+            url: gif.images.original.webp,
+            title: gif.title
         }
        ))
        
