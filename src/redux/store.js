@@ -80,7 +80,7 @@ function* postGifToFavorites(action) {
 function* setGifCategory(action) {
     try {
         yield axios.put('/api/favorites/' + action.payload.id, {category_id: action.payload.category_id});
-        yield put({type: 'SET_CATEGORIES'});
+        yield put({type: 'FETCH_FAVORITES'});
     } catch(err) {
         console.log('Error updating fav gif category:', err);
     }
