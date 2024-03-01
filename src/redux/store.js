@@ -36,7 +36,11 @@ const searchResults = (state = [], action) => {
 //GET from giphy api
 function* fetchGifs(action) {
     try {
-        const gifResponse = yield axios.get('/api/giphy?q=' + action.payload);
+        // console.log(action.payload);
+        const gifResponse = yield axios.get('/api/giphy', {
+            params: {
+                q: action.payload}});
+        // const gifResponse = yield axios.get('/api/giphy?q=' + action.payload);
         yield put({type: 'SET_SEARCHES', payload: gifResponse.data});
     } catch(err) {
         console.log('Error getting gifs from server:', err);
